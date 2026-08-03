@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FileUploadField } from "./FileUploadField";
 import { comissariaOptions } from "./mock-data";
 
-type ProcessType = "DUIMP" | "DI";
+export type ProcessType = "DUIMP" | "DI";
 
 const processTypes: ProcessType[] = ["DUIMP", "DI"];
 
@@ -13,11 +13,19 @@ const coberturaCambialOptions = [
   { value: "sim", label: "Sim" },
 ] as const;
 
-type AverbacaoFormProps = {
-  onSubmitted: () => void;
+export type AverbacaoFormData = {
+  processType: ProcessType;
+  files: string[];
+  comissaria: string;
+  codigoReferencia: string;
+  coberturaCambial: "sim" | "nao";
 };
 
-export function AverbacaoForm({ onSubmitted }: AverbacaoFormProps) {
+type AverbacaoFormProps = {
+  onSubmit: (data: AverbacaoFormData) => void;
+};
+
+export function AverbacaoForm({ onSubmit }: AverbacaoFormProps) {
   const [processType, setProcessType] = useState<ProcessType>("DUIMP");
   const [duimpPdf, setDuimpPdf] = useState<File | null>(null);
   const [chaveAcesso, setChaveAcesso] = useState("");
@@ -28,15 +36,24 @@ export function AverbacaoForm({ onSubmitted }: AverbacaoFormProps) {
   const [coberturaCambial, setCoberturaCambial] = useState<"sim" | "nao">(
     "nao",
   );
-  const [submitting, setSubmitting] = useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitting(true);
-    window.setTimeout(() => {
-      setSubmitting(false);
-      onSubmitted();
-    }, 700);
+
+    const files =
+      processType === "DUIMP"
+        ? [duimpPdf?.name].filter((name): name is string => Boolean(name))
+        : [diPdf?.name, diXml?.name].filter(
+            (name): name is string => Boolean(name),
+          );
+
+    onSubmit({
+      processType,
+      files,
+      comissaria,
+      codigoReferencia,
+      coberturaCambial,
+    });
   }
 
   return (
@@ -189,10 +206,9 @@ export function AverbacaoForm({ onSubmitted }: AverbacaoFormProps) {
       <div className="flex justify-end border-t border-zinc-100 pt-6">
         <button
           type="submit"
-          disabled={submitting}
-          className="flex h-11 cursor-pointer items-center justify-center rounded-xl bg-emerald-500 px-6 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+          className="flex h-11 cursor-pointer items-center justify-center rounded-xl bg-emerald-500 px-6 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400 active:scale-[0.98]"
         >
-          {submitting ? "Enviando..." : "Enviar para Averbação"}
+          Enviar para Averbação
         </button>
       </div>
     </form>

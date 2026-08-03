@@ -3,10 +3,13 @@
 import { useState } from "react";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
+import { UploadQueue } from "./UploadQueue";
+import { useUploadStore } from "@/store/useUploadStore";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const hasUploads = useUploadStore((state) => state.queue.length > 0);
 
   return (
     <div className="flex min-h-dvh bg-zinc-50">
@@ -27,8 +30,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       <div className="flex min-h-dvh min-w-0 flex-1 flex-col">
         <Header onOpenMobileMenu={() => setMobileOpen(true)} />
-        <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+        <main
+          className={`min-w-0 flex-1 p-4 sm:p-6 lg:p-8 ${hasUploads ? "pb-20" : ""}`}
+        >
+          {children}
+        </main>
       </div>
+
+      <UploadQueue />
     </div>
   );
 }
