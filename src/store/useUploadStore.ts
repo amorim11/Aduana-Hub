@@ -2,12 +2,17 @@ import { create } from "zustand";
 
 export type UploadStatus = "processing" | "completed" | "failed";
 export type ProcessType = "DUIMP" | "DI";
+export type Modal = "aereo" | "maritimo" | "rodoviario";
 
 export type UploadItem = {
   id: string;
   dtaNumber: string;
   importerName: string;
   processType: ProcessType;
+  processNumber: string;
+  paisOrigem: string;
+  modal: Modal;
+  numeroConhecimento: string;
   files: string[];
   status: UploadStatus;
   progress: number;
@@ -18,6 +23,10 @@ type NewUploadInput = {
   dtaNumber: string;
   importerName: string;
   processType: ProcessType;
+  processNumber: string;
+  paisOrigem: string;
+  modal: Modal;
+  numeroConhecimento: string;
   files: string[];
 };
 
