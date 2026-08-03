@@ -49,6 +49,10 @@ export function AverbacaoWorkflow() {
       dtaNumber: record.numeroDta,
       importerName: record.razaoSocialImportador,
       processType: data.processType,
+      processNumber: data.processNumber,
+      paisOrigem: record.paisOrigem,
+      modal: record.modal,
+      numeroConhecimento: record.numeroConhecimento,
       files: data.files,
     });
     simulateUpload(id);
