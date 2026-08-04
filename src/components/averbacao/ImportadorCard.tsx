@@ -32,7 +32,7 @@ export function ImportadorCard({ record }: ImportadorCardProps) {
         </span>
       </div>
 
-      <dl className="mt-4 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+      <dl className="mt-4 grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
         {fields.map((field) => (
           <div key={field.label}>
             <dt className="text-xs font-medium text-zinc-500">
