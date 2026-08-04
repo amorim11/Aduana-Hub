@@ -124,7 +124,7 @@ export function AverbacaoForm({ onSubmit, submitting }: AverbacaoFormProps) {
       </div>
 
       {processType === "DUIMP" ? (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Controller
             control={control}
             name="duimpPdf"
@@ -171,7 +171,7 @@ export function AverbacaoForm({ onSubmit, submitting }: AverbacaoFormProps) {
         </div>
       ) : (
         <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Controller
               control={control}
               name="diPdf"
@@ -201,7 +201,7 @@ export function AverbacaoForm({ onSubmit, submitting }: AverbacaoFormProps) {
               )}
             />
           </div>
-          <div className="flex flex-col gap-2 sm:w-1/2 sm:pr-2">
+          <div className="flex flex-col gap-2 md:w-1/2 md:pr-2">
             <label
               htmlFor="diNumero"
               className="text-sm font-medium text-zinc-700"
@@ -233,7 +233,7 @@ export function AverbacaoForm({ onSubmit, submitting }: AverbacaoFormProps) {
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="flex flex-col gap-2">
           <label
             htmlFor="comissaria"
