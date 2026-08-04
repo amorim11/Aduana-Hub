@@ -15,6 +15,23 @@ export const modalCounts: Record<Modal, number> = {
   aereo: 128,
 };
 
+export const statusCounts = {
+  averbado: 891,
+  pendente: 68,
+  rejeitado: 28,
+};
+
+export const monthlyTrend = [
+  { month: "Jan", count: 94 },
+  { month: "Fev", count: 108 },
+  { month: "Mar", count: 121 },
+  { month: "Abr", count: 115 },
+  { month: "Mai", count: 132 },
+  { month: "Jun", count: 127 },
+  { month: "Jul", count: 149 },
+  { month: "Ago", count: 141 },
+];
+
 export type DocumentType = "DTA" | "DI" | "DUIMP";
 export type DocumentStatus = "Averbado" | "Pendente" | "Rejeitado";
 
