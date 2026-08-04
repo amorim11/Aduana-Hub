@@ -6,6 +6,7 @@ type MetricCardProps = {
   icon: LucideIcon;
   helpText?: string;
   emphasis?: boolean;
+  percentage?: number;
 };
 
 export function MetricCard({
@@ -14,46 +15,29 @@ export function MetricCard({
   icon: Icon,
   helpText,
   emphasis = false,
+  percentage,
 }: MetricCardProps) {
   return (
-    <div
-      className={`rounded-xl border p-5 ${
-        emphasis ? "border-zinc-800 bg-zinc-950" : "border-zinc-200 bg-white"
-      }`}
-    >
-      <div className="flex items-center justify-between">
-        <p
-          className={`text-sm font-medium ${
-            emphasis ? "text-zinc-400" : "text-zinc-500"
-          }`}
-        >
-          {label}
-        </p>
-        <span
-          className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-            emphasis
-              ? "bg-emerald-500/15 text-emerald-400"
-              : "bg-emerald-500/10 text-emerald-600"
-          }`}
-        >
-          <Icon size={18} strokeWidth={2} />
-        </span>
+    <div className="rounded-2xl border border-zinc-200 bg-white p-6 transition-shadow hover:shadow-sm">
+      <div className="flex items-center gap-2 text-zinc-500">
+        <Icon size={15} strokeWidth={2} />
+        <p className="text-sm font-medium">{label}</p>
       </div>
       <p
-        className={`mt-3 text-3xl font-semibold tracking-tight ${
-          emphasis ? "text-white" : "text-zinc-900"
+        className={`mt-4 text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl ${
+          emphasis ? "text-emerald-600" : "text-zinc-900"
         }`}
       >
         {value.toLocaleString("pt-BR")}
       </p>
-      {helpText && (
-        <p
-          className={`mt-1 text-xs ${
-            emphasis ? "text-zinc-500" : "text-zinc-400"
-          }`}
-        >
-          {helpText}
-        </p>
+      {helpText && <p className="mt-1.5 text-xs text-zinc-400">{helpText}</p>}
+      {percentage != null && (
+        <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-zinc-100">
+          <div
+            className="h-full rounded-full bg-emerald-500"
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
       )}
     </div>
   );
