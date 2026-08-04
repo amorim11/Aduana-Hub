@@ -8,8 +8,8 @@ const statusStyles: Record<DocumentStatus, string> = {
 
 export function RecentActivity() {
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white">
-      <div className="border-b border-zinc-200 px-5 py-4">
+    <div className="rounded-2xl border border-zinc-200 bg-white">
+      <div className="border-b border-zinc-200 px-6 py-4">
         <h2 className="text-sm font-semibold text-zinc-900">
           Últimos Documentos Averbados
         </h2>
@@ -19,14 +19,14 @@ export function RecentActivity() {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[640px] text-sm">
+        <table className="w-full min-w-160 text-sm">
           <thead>
             <tr className="text-left text-xs text-zinc-500">
-              <th className="px-5 py-3 font-medium">Documento</th>
-              <th className="px-5 py-3 font-medium">Modal</th>
-              <th className="px-5 py-3 font-medium">Comissária</th>
-              <th className="px-5 py-3 font-medium">Data</th>
-              <th className="px-5 py-3 font-medium">Status</th>
+              <th className="px-6 py-3 font-medium">Documento</th>
+              <th className="px-6 py-3 font-medium">Modal</th>
+              <th className="px-6 py-3 font-medium">Comissária</th>
+              <th className="px-6 py-3 font-medium">Data</th>
+              <th className="px-6 py-3 font-medium">Status</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-100">
@@ -38,22 +38,22 @@ export function RecentActivity() {
                   key={doc.id}
                   className="transition-colors hover:bg-zinc-50"
                 >
-                  <td className="px-5 py-3 font-medium whitespace-nowrap text-zinc-900">
+                  <td className="px-6 py-3 font-medium whitespace-nowrap text-zinc-900">
                     {doc.documentType} {doc.documentNumber}
                   </td>
-                  <td className="px-5 py-3 whitespace-nowrap text-zinc-600">
+                  <td className="px-6 py-3 whitespace-nowrap text-zinc-600">
                     <span className="inline-flex items-center gap-1.5">
                       <ModalIcon size={14} strokeWidth={2} />
                       {modal.label}
                     </span>
                   </td>
-                  <td className="px-5 py-3 whitespace-nowrap text-zinc-600">
+                  <td className="px-6 py-3 whitespace-nowrap text-zinc-600">
                     {doc.company}
                   </td>
-                  <td className="px-5 py-3 whitespace-nowrap text-zinc-600">
+                  <td className="px-6 py-3 whitespace-nowrap text-zinc-600">
                     {doc.averbadoAt}
                   </td>
-                  <td className="px-5 py-3">
+                  <td className="px-6 py-3">
                     <span
                       className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusStyles[doc.status]}`}
                     >
