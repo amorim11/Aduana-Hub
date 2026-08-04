@@ -1,8 +1,8 @@
 import { create } from "zustand";
+import type { Modal, ProcessType } from "@/mocks/data";
 
 export type UploadStatus = "processing" | "completed" | "failed";
-export type ProcessType = "DUIMP" | "DI";
-export type Modal = "aereo" | "maritimo" | "rodoviario";
+export type { Modal, ProcessType };
 
 export type UploadItem = {
   id: string;
@@ -20,6 +20,7 @@ export type UploadItem = {
 };
 
 type NewUploadInput = {
+  id: string;
   dtaNumber: string;
   importerName: string;
   processType: ProcessType;
@@ -32,7 +33,7 @@ type NewUploadInput = {
 
 type UploadStore = {
   queue: UploadItem[];
-  addUpload: (input: NewUploadInput) => string;
+  addUpload: (input: NewUploadInput) => void;
   updateProgress: (id: string, progress: number) => void;
   setStatus: (id: string, status: UploadStatus) => void;
   retryUpload: (id: string) => void;
@@ -43,16 +44,13 @@ export const useUploadStore = create<UploadStore>((set) => ({
   queue: [],
 
   addUpload: (input) => {
-    const id = crypto.randomUUID();
     const item: UploadItem = {
-      id,
       ...input,
       status: "processing",
       progress: 0,
       createdAt: new Date().toISOString(),
     };
     set((state) => ({ queue: [item, ...state.queue] }));
-    return id;
   },
 
   updateProgress: (id, progress) =>

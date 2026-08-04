@@ -58,6 +58,12 @@ export function DtaSearchCard({
           24/0512987-4 ou 24/0098231-1.
         </p>
       )}
+
+      {status === "error" && (
+        <p className="mt-3 text-sm text-red-600">
+          Não foi possível buscar a DTA agora. Tente novamente em instantes.
+        </p>
+      )}
     </div>
   );
 }

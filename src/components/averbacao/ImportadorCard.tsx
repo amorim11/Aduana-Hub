@@ -1,5 +1,5 @@
-import type { DtaRecord } from "./mock-data";
-import { modalMeta } from "./mock-data";
+import { modalMeta } from "@/lib/modal-meta";
+import type { DtaRecord } from "@/mocks/data";
 
 type ImportadorCardProps = {
   record: DtaRecord;
