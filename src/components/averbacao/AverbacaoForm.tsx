@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FileUploadField } from "./FileUploadField";
-import { comissariaOptions } from "./mock-data";
+import { comissariaOptions } from "@/mocks/data";
 
 export type ProcessType = "DUIMP" | "DI";
 
@@ -24,9 +24,10 @@ export type AverbacaoFormData = {
 
 type AverbacaoFormProps = {
   onSubmit: (data: AverbacaoFormData) => void;
+  submitting?: boolean;
 };
 
-export function AverbacaoForm({ onSubmit }: AverbacaoFormProps) {
+export function AverbacaoForm({ onSubmit, submitting }: AverbacaoFormProps) {
   const [processType, setProcessType] = useState<ProcessType>("DUIMP");
   const [duimpPdf, setDuimpPdf] = useState<File | null>(null);
   const [chaveAcesso, setChaveAcesso] = useState("");
@@ -227,9 +228,10 @@ export function AverbacaoForm({ onSubmit }: AverbacaoFormProps) {
       <div className="flex justify-end border-t border-zinc-100 pt-6">
         <button
           type="submit"
-          className="flex h-11 cursor-pointer items-center justify-center rounded-xl bg-emerald-500 px-6 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400 active:scale-[0.98]"
+          disabled={submitting}
+          className="flex h-11 cursor-pointer items-center justify-center rounded-xl bg-emerald-500 px-6 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Enviar para Averbação
+          {submitting ? "Enviando..." : "Enviar para Averbação"}
         </button>
       </div>
     </form>

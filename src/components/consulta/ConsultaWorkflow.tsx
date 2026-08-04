@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { DocumentSearch } from "./DocumentSearch";
 import { DocumentTable } from "./DocumentTable";
 import { FileViewerModal } from "./FileViewerModal";
-import { mockDocuments, type ConsultaDocument } from "./mock-data";
+import type { ConsultaDocument } from "@/mocks/data";
+import { ApiError, fetchDocumentos } from "@/services/api";
 import { useUploadStore } from "@/store/useUploadStore";
 
 function formatSentAt(iso: string) {
@@ -14,7 +15,32 @@ function formatSentAt(iso: string) {
 export function ConsultaWorkflow() {
   const [query, setQuery] = useState("");
   const [previewFile, setPreviewFile] = useState<string | null>(null);
+  const [seedDocuments, setSeedDocuments] = useState<
+    ConsultaDocument[] | null
+  >(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const uploads = useUploadStore((state) => state.queue);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchDocumentos()
+      .then((docs) => {
+        if (!cancelled) setSeedDocuments(docs);
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setLoadError(
+          error instanceof ApiError
+            ? error.message
+            : "Não foi possível carregar os documentos agora.",
+        );
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const documents = useMemo<ConsultaDocument[]>(() => {
     const fromStore: ConsultaDocument[] = uploads
@@ -32,8 +58,8 @@ export function ConsultaWorkflow() {
         files: item.files,
       }));
 
-    return [...fromStore, ...mockDocuments];
-  }, [uploads]);
+    return [...fromStore, ...(seedDocuments ?? [])];
+  }, [uploads, seedDocuments]);
 
   const filteredDocuments = useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -48,7 +74,19 @@ export function ConsultaWorkflow() {
   return (
     <div className="flex flex-col gap-6">
       <DocumentSearch value={query} onChange={setQuery} />
-      <DocumentTable documents={filteredDocuments} onViewFile={setPreviewFile} />
+
+      {loadError && (
+        <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+          {loadError}
+        </p>
+      )}
+
+      <DocumentTable
+        documents={filteredDocuments}
+        onViewFile={setPreviewFile}
+        loading={seedDocuments === null && !loadError}
+      />
+
       <FileViewerModal
         fileName={previewFile}
         onClose={() => setPreviewFile(null)}
